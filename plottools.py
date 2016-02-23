@@ -24,6 +24,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable as _mal
 import matplotlib.patches as _mpatches
 import matplotlib.colors as _colors
 import matplotlib.cm as _cmx
+import matplotlib as mpl
 
 NCURVES = 10
 _np.random.seed(101)
@@ -34,7 +35,7 @@ def get_color(cmap, idx):
     '''
     get color
     '''
-    colormap = cm = _plt.get_cmap(cmap)
+    colormap = _plt.get_cmap(cmap)
     cNorm  = _colors.Normalize(vmin=0, vmax=values[-1])
     scalarMap = _cmx.ScalarMappable(norm=cNorm, cmap=colormap)
     colorVal = scalarMap.to_rgba(values[idx])
@@ -54,7 +55,7 @@ def simpleaxis(ax):
 
 
 def set_axis(ax, ax_disp=['left','bottom'], x_ticks=None, x_ticks_label=None, y_ticks=None, y_ticks_label=None,
-             lbsize=20, islabel=True, ax_linewidth=1, ax_tickwidth=1, xlim=None, ylim=None, islog_x=False, islog_y=False):
+             lbsize=12, islabel=True, ax_linewidth=0.8, ax_tickwidth=0.8, xlim=None, ylim=None, islog_x=False, islog_y=False):
     '''
     Axis setup.
 
@@ -152,7 +153,7 @@ def set_axis(ax, ax_disp=['left','bottom'], x_ticks=None, x_ticks_label=None, y_
     return
 
 
-def set_label(ax, title=' ', x_label=' ', y_label=' ', ftsize=20, title_ftsize=None, title_offset=1.05, islabel=True):
+def set_label(ax, title=' ', x_label=' ', y_label=' ', ftsize=12, title_ftsize=None, title_offset=1.05, islabel=True):
     '''
     Set labels
 
@@ -183,7 +184,7 @@ def set_label(ax, title=' ', x_label=' ', y_label=' ', ftsize=20, title_ftsize=N
 
 
 # fig_class
-def makefig(figsize=(5,5), num_plots=1):
+def makefig(figsize=(5,5), num_plots=1, dpi=500):
     '''
     Make figure
     Usage
@@ -215,10 +216,10 @@ def makefig(figsize=(5,5), num_plots=1):
             For num_plots>1 case, returns dictionary. Axes can be accessed using the key values
             starting from 0 to num_plots-1. ex) ax[0]~ax[num_plots-1].
     '''
-    fig = _plt.figure(figsize=figsize)
+    fig = _plt.figure(figsize=figsize, dpi=dpi)
     if num_plots == 1:
         ax = fig.add_subplot(111)
-        fig.tight_layout()
+        # fig.tight_layout()
     else:
 
         ### figure subplot grid (row = x, col = y)
@@ -239,7 +240,7 @@ def makefig(figsize=(5,5), num_plots=1):
     return fig, ax
 
 
-def savefig(fig, filename=None):
+def savefig(fig, filename=None, dpi=500, tight=True):
     '''
     save figure
 
@@ -255,9 +256,10 @@ def savefig(fig, filename=None):
         filename (string):
             file name that figure will be saved.
     '''
-    fig.tight_layout()
-    if not filename==None:
-        fig.savefig(filename, bbox_inches='tight')
+    if tight:
+        fig.tight_layout()
+    if filename is not None:
+        fig.savefig(filename, bbox_inches='tight', dpi=dpi)
     else:
         print("File name must be given. Usage: ex) savefig(fig, 'fig1')" )
 

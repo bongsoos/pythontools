@@ -240,7 +240,7 @@ def makefig(figsize=(5,5), num_plots=1, dpi=500):
     return fig, ax
 
 
-def savefig(fig, filename=None, dpi=500, tight=True):
+def savefig(fig, filename=None, dpi=500, tight=False):
     '''
     save figure
 

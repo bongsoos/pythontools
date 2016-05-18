@@ -265,3 +265,11 @@ def savefig(fig, filename=None, dpi=500, tight=False):
 
     return
 
+
+def text(ax, string, color='k', pos=[0.3,0.65], ftsize=8):
+    '''
+    insert text
+    '''
+    ax.text(pos[0], pos[1], string, verticalalignment='bottom', horizontalalignment='left',transform=ax.transAxes, color=color, fontsize=ftsize)
+
+

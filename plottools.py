@@ -266,7 +266,7 @@ def savefig(fig, filename=None, dpi=500, tight=False):
     return
 
 
-def text(ax, string, color='k', pos=[0.3,0.65], ftsize=8):
+def text(ax, string, pos=[0.3,0.65], color='k', ftsize=8):
     '''
     insert text
     '''

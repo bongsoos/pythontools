@@ -10,7 +10,7 @@ created: 2015-03-08
 '''
 
 import numpy as _np
-
+from numpy.linalg import eig as _eig
 
 def corrcoef(x, y):
     '''
@@ -34,18 +34,76 @@ def variance_explained(y, y_est):
 
     return R2
 
-def cov(X):
+def normalizeX(X):
     '''
-    Compute covariance matrix
-
+    Normalize data matrix
     mean subtraction, and variance normalization
-    X (numpy array): mxn data matrix(each column feature, each row is one data point)
-    '''
 
+    Inputs
+    ------
+    X (ndarray): mxn data matrix(each column feature, each row is one data point)
+
+    Outputs
+    -------
+    Bn (ndarray): mxn normalized matrix
+    '''
     mu = _np.array([list(_np.mean(X, axis=0))]*X.shape[0])
     B = X-mu
     sigma = _np.sqrt(_np.var(B, axis=0))
     Bn = B/_np.outer(_np.ones(B.shape[0]), sigma)
-    c = _np.dot(Bn.T, Bn) / (Bn.shape[0]-1)
 
-    return c
+    return Bn
+
+def cov(X):
+    '''
+    Compute covariance matrix
+    (mean subtraction, and variance normalization)
+
+    Inputs
+    ------
+    X (ndarray): mxn data matrix(each column feature, each row is one data point)
+
+    Outputs
+    -------
+    C (ndarray): nxn covariance matrix
+    '''
+    Bn = normalizeX(X)
+
+    C = _np.dot(Bn.T, Bn) / (Bn.shape[0]-1)
+
+    return C
+
+def eig(X):
+    '''
+    Inputs
+    ------
+    X (ndarray): nxn square matrix
+    '''
+    eigval, eigvec = _eig(X)
+    idx = _np.argsort(eigval)[::-1]
+    eigval = eigval[idx]
+    eigvec = eigvec[:,idx]
+
+    return eigvec, eigval
+
+def pca(X):
+    '''
+    Principal Component Analysis
+    Inputs
+    ------
+    X (ndarray): mxn data matrix(each column feature, each row is one data point)
+
+    Outputs
+    -------
+    eigvec (ndarray): nxn eigenvector matrix, each column is the eigenvector corresponding to the eigen values
+    eigval (ndarray): n eigenvalues, from highest to lowest
+    proj (ndarray): mxn projection matrix, each column is the projection of the data points to the corresponding eigenvectors
+    '''
+    Bn = normalizeX(X)
+    C = _np.dot(Bn.T, Bn) / (Bn.shape[0]-1)
+    eigvec, eigval = eig(C)
+
+    proj = _np.dot(Bn, eigvec)
+
+    return eigvec, eigval, proj
+

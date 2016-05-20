@@ -281,16 +281,20 @@ def scatter(ax, x, y, z, ms=20, _marker_='o', _cmap_='jet'):
     cbar = _plt.colorbar(scat)
     return cbar
 
-def set_cbar(cbar, y_ticks=None, y_ticklabels=None, label=None, ftsize=12, lbsize=12):
+def set_cbar(cbar, ticks=None, ticklabels=None, limits=None, label=None, ftsize=12, lbsize=12):
     '''
     set colorbar
     '''
-    if y_ticks is not None:
-        cbar.set_ticks(y_ticks)
-    if y_ticklabels is not None:
-        cbar.ax.set_yticklabels(y_ticklabels, fontsize=ftsize)
+    if ticks is not None:
+        cbar.set_ticks(ticks)
+    if ticklabels is not None:
+        cbar.ax.set_yticklabels(ticklabels, fontsize=ftsize)
     cbar.ax.tick_params(labelsize=lbsize)
     if label is not None:
-        cbar.set_label(label, size=lbsize)
+        cbar.set_label(label, size=ftsize)
+
+    if limits is not None:
+        cbar.set_clim(limits)
+
     return
 

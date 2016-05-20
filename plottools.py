@@ -273,3 +273,24 @@ def text(ax, string, pos=[0.3,0.65], color='k', ftsize=8):
     ax.text(pos[0], pos[1], string, verticalalignment='bottom', horizontalalignment='left',transform=ax.transAxes, color=color, fontsize=ftsize)
 
 
+def scatter(ax, x, y, z, ms=20, _marker_='o', _cmap_='jet'):
+    '''
+    scatter plot
+    '''
+    scat = ax.scatter(x, y, s=ms, c=z, marker=_marker_, cmap=_cmap_, linewidths='0')
+    cbar = _plt.colorbar(scat)
+    return cbar
+
+def set_cbar(cbar, y_ticks=None, y_ticklabels=None, label=None, ftsize=12, lbsize=12):
+    '''
+    set colorbar
+    '''
+    if y_ticks is not None:
+        cbar.set_ticks(y_ticks)
+    if y_ticklabels is not None:
+        cbar.ax.set_yticklabels(y_ticklabels, fontsize=ftsize)
+    cbar.ax.tick_params(labelsize=lbsize)
+    if label is not None:
+        cbar.set_label(label, size=lbsize)
+    return
+

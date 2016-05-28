@@ -55,7 +55,7 @@ def simpleaxis(ax):
 
 
 def set_axis(ax, ax_disp=['left','bottom'], x_ticks=None, x_ticks_label=None, y_ticks=None, y_ticks_label=None,
-             lbsize=12, islabel=True, ax_linewidth=0.8, ax_tickwidth=0.8, xlim=None, ylim=None, islog_x=False, islog_y=False):
+             lbsize=13, islabel=True, ax_linewidth=0.8, ax_tickwidth=0.8, xlim=None, ylim=None, islog_x=False, islog_y=False):
     '''
     Axis setup.
 
@@ -153,7 +153,7 @@ def set_axis(ax, ax_disp=['left','bottom'], x_ticks=None, x_ticks_label=None, y_
     return
 
 
-def set_label(ax, title=' ', x_label=' ', y_label=' ', ftsize=12, title_ftsize=None, title_offset=1.05, islabel=True):
+def set_label(ax, title=' ', x_label=' ', y_label=' ', ftsize=13, title_ftsize=None, title_offset=1.05, islabel=True):
     '''
     Set labels
 

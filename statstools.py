@@ -34,7 +34,7 @@ def variance_explained(y, y_est):
 
     return R2
 
-def normalizeX(X):
+def normalizeX(X, testvec=None, unnormalize=False):
     '''
     Normalize data matrix
     mean subtraction, and variance normalization
@@ -47,12 +47,25 @@ def normalizeX(X):
     -------
     Bn (ndarray): mxn normalized matrix
     '''
-    mu = _np.array([list(_np.mean(X, axis=0))]*X.shape[0])
-    B = X-mu
+    mu = _np.mean(X, axis=0)
+    B = X-_np.outer(_np.ones(X.shape[0]), mu)
     sigma = _np.sqrt(_np.var(B, axis=0))
     Bn = B/_np.outer(_np.ones(B.shape[0]), sigma)
 
-    return Bn
+    if testvec is None:
+        return Bn
+    else:
+        if len(testvec.shape) > 1:
+            testvec_ = testvec - _np.outer(_np.ones(testvec.shape[0]), mu)
+            testvec_ = testvec_/_np.outer(_np.ones(testvec.shape[0]), sigma)
+        elif len(testvec.shape) == 1:
+            if unnormalize:
+                testvec_ = testvec*sigma
+                testvec_ = testvec_ + mu
+            else:
+                testvec_ = testvec - mu
+                testvec_ = testvec_/sigma
+        return testvec_
 
 def cov(X):
     '''
@@ -86,7 +99,7 @@ def eig(X):
 
     return eigvec, eigval
 
-def pca(X):
+def pca(X, testvec=None):
     '''
     Principal Component Analysis
     Inputs
@@ -103,7 +116,11 @@ def pca(X):
     C = _np.dot(Bn.T, Bn) / (Bn.shape[0]-1)
     eigvec, eigval = eig(C)
 
-    proj = _np.dot(Bn, eigvec)
+    if testvec is None:
+        proj = _np.dot(Bn, eigvec)
+    else:
+        testvec_ = normalizeX(X, testvec)
+        proj = _np.dot(testvec_, eigvec)
 
     return eigvec, eigval, proj
 

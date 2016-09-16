@@ -27,3 +27,11 @@ def savedata(filename, data):
 
     pickle.dump(data, open(filename, 'wb'))
 
+def writetotext(filename, string):
+    '''
+    write text string to file
+    '''
+    f = open(filename, 'w')
+    f.write(string)
+    f.close()
+    return

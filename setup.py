@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import pythontools
 
 setup(name='pythontools',
       version=pythontools.__version__,
@@ -8,6 +9,6 @@ setup(name='pythontools',
       author_email='bongsoo.suh@gmail.com',
       url='https://github.com/bongsoos/pythontools/',
       license='MIT',
-      packages=find_packages,
+      packages=find_packages(),
       install_requires=['numpy','scipy','matplotlib'],
       zip_safe=False)

@@ -13,11 +13,11 @@ statstools
 """
 
 __all__ = [
-        'arraytools' 
-        'filetools'
-        'plottools'
-        'pyio'
-        'statstools'
+        'arraytools', 
+        'filetools',
+        'plottools',
+        'pyio',
+        'statstools',
         ]
 
 __version__ = '0.1'

@@ -39,7 +39,6 @@ def get_color(cmap, idx):
     cNorm  = _colors.Normalize(vmin=0, vmax=values[-1])
     scalarMap = _cmx.ScalarMappable(norm=cNorm, cmap=colormap)
     colorVal = scalarMap.to_rgba(values[idx])
-    print(scalarMap.get_clim())
 
     return colorVal
 
